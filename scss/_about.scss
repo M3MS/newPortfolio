@@ -1,0 +1,20 @@
+.about {
+	
+	.content {
+		&__profil {
+			max-height: 40vh;
+			margin-bottom: 5vw;
+			filter: brightness(0.5);
+		}
+
+		&__intro {
+			max-width: 70vw;
+			margin-left: 5vw;
+
+			@media (min-width: 768px) {
+				max-width: 70vw
+			}
+		}
+	}
+	
+}

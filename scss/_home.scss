@@ -1,0 +1,169 @@
+.home {
+	#gl-stuff {
+		position: fixed;
+		width: 100%;
+		height: 200vh;
+		left: 0;
+		top: 0;
+		z-index: 0;
+	}
+
+	main {
+		mix-blend-mode: exclusion;
+	}
+
+	section {
+		position: relative;
+	    width: 100vw;
+	    min-height: 60vh;
+	}
+
+	.intro {
+		position: relative;
+		display: flex;
+		align-items: center;
+		height: 100vh;
+
+		&__inner {
+			position: relative;
+			z-index: 2;
+			margin-left: 0.5vw;
+
+			h1 {
+				font-size: 27vw;
+				text-transform: uppercase;
+				font-weight: bold;
+				line-height: 0.9;
+				overflow: hidden;
+
+				@media (min-width: 768px) {
+					font-size: 18vw;
+				}
+
+				span.small {
+					font-size: 8vw;
+				}
+
+
+				> div {
+					display: inline-block !important;
+				}
+			}
+		}
+	}
+
+	.about {
+		display: flex;
+		align-items: center;
+		height: 130vh;
+
+		&__inner {
+			max-width: 70vw;
+			margin-left: 5vw;
+
+			@media (min-width: 768px) {
+				max-width: 70vw
+			}
+		}
+
+		&__text {
+			font-size: 8vw;
+
+			@media (min-width: 768px) {
+				font-size: 3vw;
+			}
+
+			span {
+				font-weight: bold;
+			}
+		}
+	}
+
+	.work {
+		//height: auto;
+		
+		&__items {
+			max-width: 90vw;
+			margin: 6rem auto;
+			
+
+			@media (min-width: 768px) {
+				max-width: 60vw;
+				position: relative;
+
+				.distort {
+					position: absolute;
+					pointer-events: none;
+					will-change: transform;
+				}
+
+				.distort__img {
+					opacity: 0;
+					//mix-blend-mode: exclusion;
+				}
+			}
+		}
+
+		&__item {
+			position: relative;
+			width: 100%;
+			display: block;
+			text-transform: uppercase;
+
+			a {
+				display: block;
+				font-size: 6vw;
+				padding: 4rem 0;
+				overflow: hidden;
+
+				@media (min-width: 768px) {
+					font-size: 3vw;
+				}
+			}
+
+			.line {
+				width: 100%;
+				height: 1px;
+				background: #fff;
+				position: absolute;
+				bottom: 0;
+				transform: scaleX(0);
+				transform-origin: left;
+			}
+		}
+	}
+
+	a.more {
+		display: inline-block;
+		position: relative;
+    	white-space: nowrap;
+
+		&:hover {
+			font-style: italic;
+
+			span {
+				animation: glitchText 0.4s linear;
+			}
+		    
+
+		    &::before {
+		        opacity: 1;
+		        animation: glitchLine 0.4s steps(2, start) forwards;
+		    }
+
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+		    width: 100%;
+		    height: 1px;
+		    background: currentColor;
+		    top: 100%;
+		    left: 0;
+		    pointer-events: none;
+			height: 2px;
+			opacity: 0;
+		}
+	}
+}
