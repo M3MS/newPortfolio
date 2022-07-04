@@ -8,6 +8,7 @@
 	<meta name="keywords" content="creative coding, frontend developer, UX, html, css, javascript, vuejs, threejs, php, gsap, barbajs, wordpress, animations" />
 	<meta name="author" content="Mehdy El Marabti" />
 	<link rel="stylesheet" href="./scss/style.scss">
+	<script>var parcelRequire;</script>
 </head>
 <body>
 	<div data-barba="wrapper">
@@ -16,12 +17,11 @@
 				El Marabti Mehdy - Frontend & Creative Developer
 			</a>
 		</header>
-		<div data-barba="container" data-barba-namespace="about" class="about">
-			
-			<main asscroll-container >
-				<div class="scroll-wrap">
+		<div data-barba="container" data-barba-namespace="about" id="about">
+
+			<main data-scroll-container >
 					<!-- BEGIN content -->
-					<div class="content">
+					<div class="content" data-scroll-section >
 						<h1 class="title-lg is-bold">About</h1>
 						<img class="content__profil" src="./img/me.jpg" alt="Mehdy">
 						<p class="content__intro lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum aut quod libero ipsum, praesentium repellat facilis tempora maiores est ipsam impedit consequuntur amet rerum placeat excepturi sequi doloribus nemo id.</p>
@@ -31,7 +31,6 @@
 						<a class="title-lg" href="/">BAck</a>
 					</div>
 					<!-- END about -->
-				</div>
 			</main>
 			<!-- scroll divs -->
 		</div>

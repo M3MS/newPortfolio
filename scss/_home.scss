@@ -1,4 +1,5 @@
-.home {
+#home {
+	
 	#gl-stuff {
 		position: fixed;
 		width: 100%;
@@ -8,14 +9,12 @@
 		z-index: 0;
 	}
 
-	main {
-		mix-blend-mode: exclusion;
-	}
-
 	section {
 		position: relative;
 	    width: 100vw;
 	    min-height: 60vh;
+	    mix-blend-mode: exclusion;
+	    z-index: 2;
 	}
 
 	.intro {
@@ -26,7 +25,6 @@
 
 		&__inner {
 			position: relative;
-			z-index: 2;
 			margin-left: 0.5vw;
 
 			h1 {

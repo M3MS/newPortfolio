@@ -26,6 +26,7 @@ export default class Scene {
           0.1,
           1000
         );
+        
         this.camera.position.set(2.0, -1.2, 1.0);
         
         this.scene = new THREE.Scene();
@@ -192,6 +193,7 @@ export default class Scene {
     }
 
     cameraReset() {
-        this.camera.position.set(2.0, -1.2, 1.0);
+        this.camera.position.x = 2.0;
+        //console.log(this.camera.position);
     }
 }

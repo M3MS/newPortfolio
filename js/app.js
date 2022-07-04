@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import ScrollTrigger from "gsap/ScrollTrigger";
 import SplitText from "gsap/SplitText";
-import ASScroll from '@ashthornton/asscroll';
+import LocomotiveScroll from 'locomotive-scroll';
 import Scene from './scene.js';
 import Cursor from './cursor';
 import workHover from './workItem';
@@ -10,7 +10,6 @@ import barba from '@barba/core';
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger);
 
-const asscroll = setupASScroll();
 const overlayPath = document.querySelector('.overlay__path');
 const cursor = new Cursor(document.querySelector('.cursor'));
 
@@ -19,62 +18,89 @@ const cursor = new Cursor(document.querySelector('.cursor'));
     link.addEventListener('mouseleave', () => cursor.leave());
 });
 
+let loco;
+let blob;
 
-function setupASScroll(){
-    
-    let asscroll = new ASScroll({
-        disableRaf: true,
-        scrollElements: document.querySelectorAll(".gsap-marker-start, .gsap-marker-end, [asscroll]")
+function initScroll(container){
+
+    loco = new LocomotiveScroll({
+        el: container.querySelector('[data-scroll-container]'),
+        smooth: true,
+        smoothMobile: true,
+        getDirection: true
     });
 
+    loco.on("scroll", ScrollTrigger.update);
 
-    gsap.ticker.add(asscroll.update);
+    ScrollTrigger.scrollerProxy('[data-scroll-container]', {
 
-    ScrollTrigger.defaults({
-        scroller: asscroll.containerElement
-    });
-
-    ScrollTrigger.scrollerProxy(asscroll.containerElement, {
         scrollTop(value) {
-            if (arguments.length) {
-                asscroll.currentPos = value;
-                return;
-            }
-            return asscroll.currentPos;
-        },
+          return arguments.length ? loco.scrollTo(value, 0, 0) : loco.scroll.instance.scroll.y;
+        }, 
         getBoundingClientRect() {
-            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight }
+            return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
         },
-        fixedMarkers: true
+        pinType: container.querySelector('[data-scroll-container]').style.transform ? "transform" : "fixed"
+
+    });
+    ScrollTrigger.addEventListener('refresh', () => loco.update());
+    ScrollTrigger.refresh();
+}
+
+function delay(n) {
+    n = n || 2000;
+    return new Promise((done) => {
+        setTimeout(() => {
+            done();
+        }, n);
+    });
+}
+
+function theBlob(container){
+
+    console.log(container)
+
+    blob = new Scene({
+        domElement: container.querySelector('#gl-stuff')
+    });
+    let animMesh = blob.mesh;
+
+    gsap.set(blob.camera.position, {
+        x: 2,
+        z: 1
     });
 
-    asscroll.on("update", ScrollTrigger.update);
-    ScrollTrigger.addEventListener("refresh", asscroll.resize);
-    
-    requestAnimationFrame(() => {
-       asscroll.enable({
-            newScrollElements: document.querySelectorAll(".gsap-marker-start, .gsap-marker-end, [asscroll]")
-        }); 
+    let glTl = gsap.timeline({
+        clearProps: true,
+        scrollTrigger: {
+            trigger: '.about',
+            start: "top 60%",
+            scroller: ".scroller",
+            scrub: 2
+        }
     });
-    return asscroll;
-};
+    
+
+    glTl.to(animMesh.rotation, {
+        x: 0.5,
+        y: -1
+    });
+
+    glTl.to(blob.camera.position, {
+        x: 4,
+        z: 4
+    }, '-= 1');
+}
 
 function home(){
 
-    let crazyStuff = new Scene({
-        domElement: document.getElementById('gl-stuff')
-    });
-
-    new workHover();
+    //new workHover();
 
     let textSplit = new SplitText('.text-split', {type: "lines, words"});
     let introSplit = new SplitText('.intro-title', {type: "lines, words"});
-
     let wavyText = textSplit.words;
     let introText = introSplit.words;
-
     let workItem = document.querySelectorAll(".work__item");
-    let animMesh = crazyStuff.mesh;
     let introTl = gsap.timeline({paused: true, delay: 1.0});
 
     introText.forEach(word => {
@@ -100,6 +126,7 @@ function home(){
             scrollTrigger: {
                 trigger: word,
                 start: "top 60%",
+                scroller: ".scroller"
             }
         })
     });
@@ -107,17 +134,18 @@ function home(){
 
     workItem.forEach(item => {
 
-        line = item.querySelectorAll('.line');
-        client = item.querySelectorAll('.client')
-        workSplit = new SplitText(client, {type: "lines, words"});
-        workText = workSplit.lines;
-        workTl = gsap.timeline({
+        let line = item.querySelectorAll('.line');
+        let client = item.querySelectorAll('.client')
+        let workSplit = new SplitText(client, {type: "lines, words"});
+        let workText = workSplit.lines;
+        let workTl = gsap.timeline({
             clearProps: true,
             stagger: 0.5,
             ease: "power3",
             scrollTrigger: {
                 trigger: item,
                 start: "top 60%",
+                scroller: ".scroller"
             }
         });
 
@@ -131,165 +159,85 @@ function home(){
         }, '-= 0.5')
     });
 
-
-    glTl = gsap.timeline({
-        clearProps: true,
-        scrollTrigger: {
-            trigger: '.about',
-            start: "top 60%",
-            scrub: 2
-        }
-    });
-    
-
-    glTl.to(animMesh.rotation, {
-        x: 0.5,
-        y: -1
-    });
-
-    glTl.to(crazyStuff.camera.position, {
-        x: 4,
-        z: 4
-    }, '-= 1');
-
     introTl.play();
 }
 
 
-window.addEventListener("load", () => {
-    //asscroll.enable();
-});
+function pageTransitionIn({container}) {
+    return gsap.timeline()
+        .set(overlayPath, { 
+            attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' }
+        })
+        .to(overlayPath, { 
+            duration: 0.3,
+            ease: 'power2.in',
+            attr: { d: 'M 0 100 V 50 Q 50 100 100 50 V 100 z' }
+        })
+        .to(overlayPath, { 
+            duration: 0.8,
+            ease: 'power4',
+            attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' }
+        })
+        .from(container, {
+            opacity: 0
+        })
+}
+
+function pageTransitionOut({container}) {
+    return gsap.timeline()
+        .to(container, {
+            opacity: 0,
+            duration: 0.5
+        })
+        .set(overlayPath, {
+            attr: { d: 'M 0 0 V 0 Q 50 0 100 0 V 0 z' }
+        })
+        .to(overlayPath, { 
+            duration: 0.8,
+            ease: 'power4.in',
+            attr: { d: 'M 0 0 V 50 Q 50 100 100 50 V 0 z' }
+        }, 0)
+        .to(overlayPath, { 
+            duration: 0.3,
+            ease: 'power2',
+            attr: { d: 'M 0 0 V 100 Q 50 100 100 100 V 0 z' }
+        })
+}
 
 
 barba.init({
+    debug: true,
+    sync:true,
     views: [{
         namespace: 'home',
-        beforeEnter() {
+        beforeEnter(data) {
             home();
-            Scene.cameraReset();
-        }
-    },
-    {
-        namespace: 'about',
-        beforeEnter() {
-            console.log('aboutwat?');
+            theBlob(data.next.container);
         }
     }],
     transitions: [{
-        name: 'from-home',
-        from: {
-            namespace: ["home"]
-        },
-        leave(data) {
-
-            asscroll.disable();
-
-            return gsap.timeline()
-            .to(data.current.container,{
-                opacity: 0.,
-                duration: 0.5
-            })
-            .set(overlayPath, {
-                attr: { d: 'M 0 0 V 0 Q 50 0 100 0 V 0 z' }
-            })
-            .to(overlayPath, { 
-                duration: 0.8,
-                ease: 'power4.in',
-                attr: { d: 'M 0 0 V 50 Q 50 100 100 50 V 0 z' }
-            }, 0)
-            .to(overlayPath, { 
-                duration: 0.3,
-                ease: 'power2',
-                attr: { d: 'M 0 0 V 100 Q 50 100 100 100 V 0 z' }
-            })
-        },
-        enter(data) {
-            asscroll = new ASScroll({
-                disableRaf: true,
-                containerElement: data.next.container.querySelector("[asscroll-container]")
-            })
-            asscroll.enable({
-                newScrollElements: data.next.container.querySelector('.scroll-wrap')
-            })
-            return gsap.timeline()
-            .set(overlayPath, { 
-                attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' }
-            })
-            .to(overlayPath, { 
-                duration: 0.3,
-                ease: 'power2.in',
-                attr: { d: 'M 0 100 V 50 Q 50 100 100 50 V 100 z' }
-            })
-            .to(overlayPath, { 
-                duration: 0.8,
-                ease: 'power4',
-                attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' }
-            })
-            .from(data.next.container,{
-                opacity: 0.,
-                onComplete: ()=>{
-                    data.current.container.style.visibility = "hidden";
-                }
-            })
-        }
-    },
-    {
-        name: 'from-about',
-        from: {
-            namespace: ["about"]
-        },
-        leave(data) {
-            asscroll.disable();
-            return gsap.timeline()
-            .to(data.current.container,{
-                opacity: 0.,
-                duration: 0.5
-            })
-            .set(overlayPath, {
-                attr: { d: 'M 0 0 V 0 Q 50 0 100 0 V 0 z' }
-            })
-            .to(overlayPath, { 
-                duration: 0.8,
-                ease: 'power4.in',
-                attr: { d: 'M 0 0 V 50 Q 50 100 100 50 V 0 z' }
-            }, 0)
-            .to(overlayPath, { 
-                duration: 0.3,
-                ease: 'power2',
-                attr: { d: 'M 0 0 V 100 Q 50 100 100 100 V 0 z' }
-            })
-        },
-        enter(data) {
-            
-            let asscroll = new ASScroll({
-                disableRaf: true,
-                containerElement: data.next.container.querySelector("[asscroll-container]")
-            })
-            asscroll.enable({
-                newScrollElements: data.next.container.querySelector('.scroll-wrap')
-            })
-            home();
-            asscroll.update()
-            return gsap.timeline()
-            .set(overlayPath, { 
-                attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' }
-            })
-            .to(overlayPath, { 
-                duration: 0.3,
-                ease: 'power2.in',
-                attr: { d: 'M 0 100 V 50 Q 50 100 100 50 V 100 z' }
-            })
-            .to(overlayPath, { 
-                duration: 0.8,
-                ease: 'power4',
-                attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' }
-            })
-            .from(data.next.container,{
-                opacity: 0.,
-                onComplete: ()=>{
-                    data.current.container.style.visibility = "hidden";
-                }
-            })
-        }
+        name: 'overlay-transition',
+            async once(data) {
+                initScroll(data.next.container);
+                home();
+                theBlob(data.next.container);
+            },
+            async leave(data) {
+                //pageTransitionIn(data.current);
+                data.current.container.remove();
+            },
+            async beforeEnter(data) {
+                ScrollTrigger.getAll().forEach(tl => tl.kill());
+                loco.destroy();
+                initScroll(data.next.container);
+            },
+            async enter(data) {
+                window.scrollTo(0, 0);
+                //pageTransitionOut(data.next);
+            }
     }]
+});
+
+window.addEventListener("load", () => {
+    home();
 });
