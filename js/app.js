@@ -4,8 +4,6 @@ import SplitText from "gsap/SplitText";
 import LocomotiveScroll from 'locomotive-scroll';
 import Scene from './scene.js';
 import Cursor from './cursor';
-import workHover from './workItem';
-import barba from '@barba/core';
 
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger);
@@ -19,14 +17,12 @@ const cursor = new Cursor(document.querySelector('.cursor'));
 });
 
 let loco;
-let blob;
 
-function initScroll(container){
+function initScroll(){
 
     loco = new LocomotiveScroll({
-        el: container.querySelector('[data-scroll-container]'),
+        el: document.querySelector('[data-scroll-container]'),
         smooth: true,
-        smoothMobile: true,
         getDirection: true
     });
 
@@ -40,40 +36,25 @@ function initScroll(container){
         getBoundingClientRect() {
             return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
         },
-        pinType: container.querySelector('[data-scroll-container]').style.transform ? "transform" : "fixed"
+        pinType: document.querySelector('[data-scroll-container]').style.transform ? "transform" : "fixed"
 
     });
     ScrollTrigger.addEventListener('refresh', () => loco.update());
     ScrollTrigger.refresh();
 }
 
-function delay(n) {
-    n = n || 2000;
-    return new Promise((done) => {
-        setTimeout(() => {
-            done();
-        }, n);
+function theBlob() {
+
+    let blob = new Scene({
+        domElement: document.querySelector('#gl-stuff')
     });
-}
 
-function theBlob(container){
-
-    console.log(container)
-
-    blob = new Scene({
-        domElement: container.querySelector('#gl-stuff')
-    });
     let animMesh = blob.mesh;
 
-    gsap.set(blob.camera.position, {
-        x: 2,
-        z: 1
-    });
-
-    let glTl = gsap.timeline({
+    let g1Tl = gsap.timeline({
         clearProps: true,
         scrollTrigger: {
-            trigger: '.about',
+            trigger: '.hello',
             start: "top 60%",
             scroller: ".scroller",
             scrub: 2
@@ -81,27 +62,107 @@ function theBlob(container){
     });
     
 
-    glTl.to(animMesh.rotation, {
+    g1Tl.to(animMesh.rotation, {
         x: 0.5,
         y: -1
     });
 
-    glTl.to(blob.camera.position, {
-        x: 4,
-        z: 4
+    g1Tl.to(blob.camera.position, {
+        x: 3,
+        z: 4.5
     }, '-= 1');
+
+    let g2Tl = gsap.timeline({
+        clearProps: true,
+        scrollTrigger: {
+            trigger: '.techno',
+            start: "top 80%",
+            scroller: ".scroller",
+            scrub: 2
+        }
+    });
+    
+
+    g2Tl.to(animMesh.rotation, {
+        x: -2.5,
+        y: 1.5
+    });
+
+    g2Tl.to(animMesh.scale, {
+        x: 2.5,
+        z: 3
+    }, '-= 1');
+
+    // g2Tl.to(blob.camera.scale, {
+    //     x: 2.5,
+    //     z: 2
+    // }, '-= 1');
+
+    g2Tl.to(blob.camera.position, {
+        x: 6,
+        y: -8
+    }, '-= 1');
+    
+    //console.log(blob);
+}
+
+function marQuee() {
+
+    ScrollTrigger.saveStyles(".first, .second");
+
+    ScrollTrigger.matchMedia({
+      
+      "(max-width: 768px)": function() {
+        
+        let mobileTL = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".marquee",
+            start: "-100% bottom",
+            scrub: 1,
+            scroller: ".scroller"
+          }
+        });
+
+        mobileTL.to(".first", {duration: 2, xPercent: -100})
+                .to(".second", {duration: 2, xPercent: 100}, "<");
+      },
+      
+      "(min-width: 769px)": function() {
+
+        let desktopTL = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".marquee",
+            start: "0% bottom",
+            scrub: 7,
+            scroller: ".scroller"
+          }
+        });
+
+        desktopTL.to(".first", {duration: 2, xPercent: -100})
+                 .to(".second", {duration: 2, xPercent: 100}, "<");
+      }
+    });
+
+    gsap.to('.techno', {
+        backgroundColor: 'rgb(249 255 107)',
+        ease: "sine.in",
+        duration: 1,
+        scrollTrigger: {
+            start: "top 20%",
+            trigger: ".techno",
+            scroller: ".scroller"
+        }
+    });
 }
 
 function home(){
-
-    //new workHover();
 
     let textSplit = new SplitText('.text-split', {type: "lines, words"});
     let introSplit = new SplitText('.intro-title', {type: "lines, words"});
     let wavyText = textSplit.words;
     let introText = introSplit.words;
-    let workItem = document.querySelectorAll(".work__item");
-    let introTl = gsap.timeline({paused: true, delay: 1.0});
+    let workItem = gsap.utils.toArray(".work__item");
+    let introTl = gsap.timeline({paused: true, delay: 2.5});
 
     introText.forEach(word => {
 
@@ -122,7 +183,7 @@ function home(){
             opacity: 0,
             y: 150,
             stagger: 0.5,
-            ease: "power3",
+            ease: "power3inOut",
             scrollTrigger: {
                 trigger: word,
                 start: "top 60%",
@@ -141,7 +202,7 @@ function home(){
         let workTl = gsap.timeline({
             clearProps: true,
             stagger: 0.5,
-            ease: "power3",
+            ease: "power3inOut",
             scrollTrigger: {
                 trigger: item,
                 start: "top 60%",
@@ -153,11 +214,16 @@ function home(){
             scaleX: 1.0,
             duration: 1.0
         })
+
         workTl.from(workText, {
             opacity: 0,
             y: 150
         }, '-= 0.5')
     });
+
+    theBlob();
+
+    marQuee();
 
     introTl.play();
 }
@@ -204,40 +270,29 @@ function pageTransitionOut({container}) {
         })
 }
 
+initScroll();
+home();
 
-barba.init({
-    debug: true,
-    sync:true,
-    views: [{
-        namespace: 'home',
-        beforeEnter(data) {
-            home();
-            theBlob(data.next.container);
-        }
-    }],
-    transitions: [{
-        name: 'overlay-transition',
-            async once(data) {
-                initScroll(data.next.container);
-                home();
-                theBlob(data.next.container);
-            },
-            async leave(data) {
-                //pageTransitionIn(data.current);
-                data.current.container.remove();
-            },
-            async beforeEnter(data) {
-                ScrollTrigger.getAll().forEach(tl => tl.kill());
-                loco.destroy();
-                initScroll(data.next.container);
-            },
-            async enter(data) {
-                window.scrollTo(0, 0);
-                //pageTransitionOut(data.next);
-            }
-    }]
-});
+document.addEventListener("DOMContentLoaded", () => {
 
-window.addEventListener("load", () => {
-    home();
+    gsap.timeline({delay: 0.5})
+        .set(overlayPath, { 
+            attr: { d: 'M 0 100 V 0 Q 50 0 100 0 V 100 z' }
+        })
+        .to(overlayPath, { 
+            duration: 0.3,
+            ease: 'power2.in',
+            attr: { d: 'M 0 100 V 50 Q 50 100 100 50 V 100 z' }
+        })
+        .to(overlayPath, { 
+            duration: 0.8,
+            ease: 'power4',
+            attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' }
+        })
+        .to('#gl-stuff, .scroller', {
+            opacity: 1,
+            duration: 2.0,
+            ease: 'power4.in'
+        })
+        
 });

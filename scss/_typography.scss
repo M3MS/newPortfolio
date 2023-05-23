@@ -42,6 +42,10 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
 
+small {
+    font-size: 1rem;
+}
+
 
 .title-lg {
     font-size: 24vw;
@@ -56,6 +60,15 @@ h1, h2, h3, h4, h5, h6 {
 
     @media (min-width: 768px) {
         font-size: 14vw;
+    }
+}
+
+
+.title-sm {
+    font-size: 12vw;
+
+    @media (min-width: 768px) {
+        font-size: 6vw;
     }
 }
 
