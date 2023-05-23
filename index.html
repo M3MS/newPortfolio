@@ -3,129 +3,147 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Mehdy El Marabti: Creative Developer</title>
+	<title>Mehdy El Marabti: Frontend & Creative Developer</title>
 	<meta name="description" content="Mehdy El Marabti - Creative Developer based in Berlin" />
-	<meta name="keywords" content="creative coding, frontend developer, UX, html, css, javascript, vuejs, threejs, php, gsap, barbajs, wordpress, animations" />
+	<meta name="keywords" content="creative coding, frontend developer, UX, html, css, javascript, vuejs, threejs, php, gsap, parcel, wordpress, animations" />
 	<meta name="author" content="Mehdy El Marabti" />
+	<link rel="icon" href="/favicon.ico" sizes="any">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 	<link rel="stylesheet" href="./scss/style.scss">
 	<script>var parcelRequire;</script>
 </head>
-<body>
-	<div data-barba="wrapper">
-		<header class="site-header">
-			<a href="/" class="logo">
-				El Marabti Mehdy - Frontend & Creative Developer
-			</a>
-		</header>
-		<div data-barba="container" data-barba-namespace="home" id="home">
-			<div id="gl-stuff"></div>
-			<main class="scroller" data-scroll-container data-scroll-section-inview >
-				<section data-scroll-section class="intro">
-					<div class="intro__inner">
-						<h1 class="intro-title">
-							Code<br>
-							<span class="hollow-text">Sweat</span>
-							<span class="small">&</span><br> Tears
-						</h1>
+<body id="home">
+	<header class="site-header">
+		<a href="/" class="logo">
+			El Marabti Mehdy - Frontend & Creative Developer
+		</a>
+	</header>
+	<div id="gl-stuff"></div>
+	<main class="scroller" data-scroll-container data-scroll-section-inview >
+		<section data-scroll-section class="intro">
+			<div class="intro__inner">
+				<h1 class="intro-title">
+					Code<br>
+					<span class="hollow-text">Sweat</span>
+					<span class="small">&</span><br> Tears
+				</h1>
+			</div>
+		</section>
+		<section data-scroll-section class="hello">
+			<div class="hello__inner">
+				<h3 class="hello__text text-split anim-text">
+					<span>Hi there!</span>
+					Welcome to my portfolio.<br>
+					I'm Mehdy, a frontend and creative developer based in Berlin.<br> I like creating neat interface with cool animations and clean code. Currently discovering the magic world of threejs and vue. (~‾▿‾)~
+				</h3>
+			</div>
+		</section>
+		<section data-scroll-section class="work">
+			<div class="work__inner">
+				<h3 class="title-lg is-bold text-split">WORK</h3>
+				<div class="work__items">
+					
+					<div class="work__item">
+						<a href="https://28marketplace.co.uk" class="client" target="_blank">
+							28 Market Place
+						</a>
+						<span class="line"></span>
 					</div>
-				</section>
-				<section data-scroll-section class="about">
-					<div class="about__inner">
-						<h3 class="about__text text-split anim-text">
-							Hi there!<br>
-							I'm a frontend and creative developer based in Berlin. I like creating neat interface with cool animations and clean code.<br>Currently discovering the magic world of threejs and vue. (~‾▿‾)~
-						</h3>
+					<div class="work__item">
+						<a href="https://www.canvasoffices.co.uk" class="client" target="_blank">
+							Canvas Offices
+						</a>
+						<span class="line"></span>
 					</div>
-				</section>
-				<section data-scroll-section class="work">
-					<div class="work__inner">
-						<h3 class="title-lg is-bold text-split">WORK</h3>
-						<div class="work__items">
-							<svg class="distort" width="350" height="450" viewBox="0 0 350 450">
-								<filter id="distortionFilter">
-									<feTurbulence type="fractalNoise" baseFrequency="0.01 0.003" numOctaves="5" seed="2" stitchTiles="noStitch" x="0%" y="0%" width="100%" height="100%" result="noise"/>
-									<feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="B" x="0%" y="0%" width="100%" height="100%" filterUnits="userSpaceOnUse"/>
-								</filter>
-								<g filter="url(#distortionFilter)">
-									<image class="distort__img" x="50" y="50" xlink:href="img/1.jpg" height="350" width="250"/>
-									<image class="distort__img" x="50" y="50" xlink:href="img/2.jpg" height="350" width="250"/>
-									<image class="distort__img" x="50" y="50" xlink:href="img/3.jpg" height="350" width="250"/>
-									<image class="distort__img" x="50" y="50" xlink:href="img/4.jpg" height="350" width="250"/>
-									<image class="distort__img" x="50" y="50" xlink:href="img/5.jpg" height="350" width="250"/>
-									<image class="distort__img" x="50" y="50" xlink:href="img/6.jpg" height="350" width="250"/>
-									<image class="distort__img" x="50" y="50" xlink:href="img/7.jpg" height="350" width="250"/>
-									<image class="distort__img" x="50" y="50" xlink:href="img/8.jpg" height="350" width="250"/>
-								</g>
-							</svg>
-							<div class="work__item">
-								<a href="https://28marketplace.co.uk" class="client" target="_blank">
-									28 Market Place
-								</a>
-								<span class="line"></span>
-							</div>
-							<div class="work__item">
-								<a href="https://www.canvasoffices.co.uk" class="client" target="_blank">
-									Canvas Offices
-								</a>
-								<span class="line"></span>
-							</div>
-							<div class="work__item">
-								<a href="https://www.kutir.co.uk" class="client" >
-									Kutir
-								</a>
-								<span class="line"></span>
-							</div>
-							<div class="work__item">
-								<a href="https://vardorestaurant.co.uk/" class="client" target="_blank">
-									Vardo
-								</a>
-								<span class="line"></span>
-							</div>
-							<div class="work__item">
-								<a href="https://chpqs.com/" class="client" target="_blank">
-									CHP
-								</a>
-								<span class="line"></span>
-							</div>
-							<div class="work__item">
-								<a href="https://lahkoh.co.uk/" class="client" target="_blank">
-									Lah Koh
-								</a>
-								<span class="line"></span>
-							</div>
-							<div class="work__item">
-								<a href="https://sohobrewing.com/" class="client" target="_blank">
-									Soho Brewing
-								</a>
-								<span class="line"></span>
-							</div>
-							<div class="work__item">
-								<a href="https://www.frontierpubs.co.uk/" class="client" target="_blank">
-									Frontier
-								</a>
-								<span class="line"></span>
-							</div>
-						</div>
+					<div class="work__item">
+						<a href="https://www.kutir.co.uk" class="client" >
+							Kutir
+						</a>
+						<span class="line"></span>
 					</div>
-					<a class="title-lg is-bold more" href="/about.html"><span>About</span></a>
-				</section>
-			</main>
+					<div class="work__item">
+						<a href="https://vardorestaurant.co.uk/" class="client" target="_blank">
+							Vardo
+						</a>
+						<span class="line"></span>
+					</div>
+					<div class="work__item">
+						<a href="https://chpqs.com/" class="client" target="_blank">
+							CHP
+						</a>
+						<span class="line"></span>
+					</div>
+					<div class="work__item">
+						<a href="https://lahkoh.co.uk/" class="client" target="_blank">
+							Lah Koh
+						</a>
+						<span class="line"></span>
+					</div>
+					<div class="work__item">
+						<a href="https://sohobrewing.com/" class="client" target="_blank">
+							Soho Brewing
+						</a>
+						<span class="line"></span>
+					</div>
+					<div class="work__item">
+						<a href="https://www.frontierpubs.co.uk/" class="client" target="_blank">
+							Frontier
+						</a>
+						<span class="line"></span>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section data-scroll-section class="techno">
+			<h3 class="lead text-center is-bold text-split">Things I use:</h3>
+			<div class="marquee">
+				<div class="marquee__inner first">
+					<span>GSAP</span>
+					<span>COFFEE</span>
+					<span>THREEJS</span>
+					<span>BANANAS</span>
+				</div>
+				<div class="marquee__inner second">
+					<span>WORDPRESS</span>
+					<span>CLUBMATE</span>
+					<span>TWIG</span>
+					<span>WEBPACK</span>
+				</div>
+				<div class="marquee__inner first">
+					<span>GULP</span>
+					<span>COMPOSER</span>
+					<span>PIZZA</span>
+					<span>DOCKER</span>
+				</div>
+				<div class="marquee__inner second">
+					<span>VUE</span>
+					<span>MORE COFFEE</span>
+					<span>SASS</span>
+					<span>FIGMA</span>
+				</div>
+			</div>
 			
-		</div>
-		<footer class="footer">
-			<small>Copyright Mehdy El Marabti 2021</small>
-		</footer>
-	</div>
-	<!-- end barba -->
+		</section>
+		<section data-scroll-section class="more">
+			<div class="more__inner">
+				<a class="title-md is-bold text-center contact" href="mailto:contact@mehdy-elm.com" target="_blank">contact</a>
+				<div class="socials">
+					<a href="https://www.linkedin.com/in/mehdyelm/" target="_blank">linkedin</a>
+					<a href="https://github.com/M3MS" target="_blank">github</a>
+					<a href="https://www.instagram.com/_m3ms_/" target="_blank">instagram</a>
+				</div>
+			</div>
+		</section>
+	</main>
+	<footer class="site-footer">
+		<small>© Mehdy El Marabti 2022</small>
+	</footer>
 	<svg class="cursor" width="50" height="50" viewBox="0 0 50 50">
 		<circle class="cursor__inner" cx="25" cy="25" r="12.5"/>
 	</svg>
 	<svg class="overlay" width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
 		<path class="overlay__path" vector-effect="non-scaling-stroke" d="M 0 100 V 100 Q 50 100 100 100 V 100 z" />
 	</svg>
-
-	<div data-barba="container"></div>
 	<script type="module" src="js/app.js"></script>
-
 </body>
 </html>	

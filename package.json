@@ -28,6 +28,6 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "start": "parcel index.html",
-    "build": "npm run clean && npm run build:parcel"
+    "build": "parcel build --no-minify index.html"
   }
 }

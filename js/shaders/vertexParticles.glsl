@@ -148,7 +148,7 @@ return rotation3dY(angle) * v;
 void main() {
 	vUv = uv;
 	float t = uTime * uSpeed;
-    float distortion = pnoise((normal + t) * uNoiseDensity, vec3(10.0)) * uNoiseStrength;
+  float distortion = pnoise((normal + t) * uNoiseDensity, vec3(10.0)) * uNoiseStrength;
 
 	vec3 pos = position + (normal * distortion);
     float angle = sin(uv.y * uFrequency + t) * uAmplitude;
