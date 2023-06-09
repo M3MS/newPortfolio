@@ -8,6 +8,7 @@ import Cursor from './cursor';
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(ScrollTrigger);
 
+const overlay = document.querySelector('.overlay');
 const overlayPath = document.querySelector('.overlay__path');
 const cursor = new Cursor(document.querySelector('.cursor'));
 
@@ -18,7 +19,7 @@ const cursor = new Cursor(document.querySelector('.cursor'));
 
 let loco;
 
-function initScroll(){
+function initScroll() {
 
     loco = new LocomotiveScroll({
         el: document.querySelector('[data-scroll-container]'),
@@ -155,7 +156,7 @@ function marQuee() {
     });
 }
 
-function home(){
+function home() {
 
     let textSplit = new SplitText('.text-split', {type: "lines, words"});
     let introSplit = new SplitText('.intro-title', {type: "lines, words"});
@@ -177,6 +178,12 @@ function home(){
 
     });
 
+    introTl.from('#gl-stuff', {
+        autoAlpha: 0,
+        duration: 2,
+        ease: 'power3.out'
+    });
+
     wavyText.forEach(word => {
 
         gsap.from(word, {
@@ -187,7 +194,7 @@ function home(){
             scrollTrigger: {
                 trigger: word,
                 start: "top 60%",
-                scroller: ".scroller"
+                scroller: ".scroller",
             }
         })
     });
@@ -196,7 +203,7 @@ function home(){
     workItem.forEach(item => {
 
         let line = item.querySelectorAll('.line');
-        let client = item.querySelectorAll('.client')
+        let client = item.querySelectorAll('.work__item a');
         let workSplit = new SplitText(client, {type: "lines, words"});
         let workText = workSplit.lines;
         let workTl = gsap.timeline({
@@ -244,6 +251,10 @@ function pageTransitionIn({container}) {
             ease: 'power4',
             attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' }
         })
+        .to(overlayPath, {
+            autoAlpha: 0,
+            ease: 'power4'
+        })
         .from(container, {
             opacity: 0
         })
@@ -270,8 +281,12 @@ function pageTransitionOut({container}) {
         })
 }
 
-initScroll();
-home();
+
+
+window.addEventListener("load", () => {
+    initScroll();
+    home();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -289,10 +304,14 @@ document.addEventListener("DOMContentLoaded", () => {
             ease: 'power4',
             attr: { d: 'M 0 100 V 100 Q 50 100 100 100 V 100 z' }
         })
+        .to(overlay, {
+            autoAlpha: 0,
+            ease: 'power4'
+        })
         .to('#gl-stuff, .scroller', {
-            opacity: 1,
+            autoAlpha: 1,
             duration: 2.0,
-            ease: 'power4.in'
+            ease: "power3inOut"
         })
         
 });

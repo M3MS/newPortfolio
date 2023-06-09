@@ -57,7 +57,7 @@ export default class Scene {
     }
 
     addElements() {
-        const geometry = new THREE.IcosahedronBufferGeometry(2.0, 96, 96);
+        const geometry = new THREE.IcosahedronGeometry(2.0, 96, 96);
         const material = new THREE.ShaderMaterial({
             vertexShader,
             fragmentShader,
@@ -96,13 +96,13 @@ export default class Scene {
         bloomPass.radius = params.bloomRadius;
 
         this.composer.addPass( renderScene );
-        this.composer.addPass( bloomPass );
+        //this.composer.addPass( bloomPass );
     }
 
     addParticles(){
         let N = 7000;
         let positions = new Float32Array( N * 3 );
-        this.particleGeometry = new THREE.IcosahedronBufferGeometry( 2., 24, 24 );
+        this.particleGeometry = new THREE.IcosahedronGeometry( 2., 24, 24 );
 
         let inc = Math.PI*(3 - Math.sqrt(5));
         let offset = 2/N;
