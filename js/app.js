@@ -133,8 +133,8 @@ function marQuee() {
         let desktopTL = gsap.timeline({
           scrollTrigger: {
             trigger: ".marquee",
-            start: "0% bottom",
-            scrub: 7,
+            start: "10% bottom",
+            scrub: 5,
             scroller: ".scroller"
           }
         });
@@ -149,7 +149,7 @@ function marQuee() {
         ease: "sine.in",
         duration: 1,
         scrollTrigger: {
-            start: "top 20%",
+            start: "top 70%",
             trigger: ".techno",
             scroller: ".scroller"
         }
@@ -193,7 +193,7 @@ function home() {
             ease: "power3inOut",
             scrollTrigger: {
                 trigger: word,
-                start: "top 60%",
+                start: "top 70%",
                 scroller: ".scroller",
             }
         })
