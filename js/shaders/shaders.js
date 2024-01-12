@@ -2,7 +2,7 @@
 
 export const settings = {
   speed: 0.05,
-  density: 1.8,
+  density: 0.8,
   strength: 0.8,
   frequency: 3.0,
   amplitude: 3.0,

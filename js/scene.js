@@ -1,8 +1,6 @@
 import * as THREE from 'three';
 import {RenderPass} from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import {UnrealBloomPass} from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
-import {FilmPass} from 'three/examples/jsm/postprocessing/FilmPass.js';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from 'dat.gui';
 import gsap from 'gsap';
@@ -74,29 +72,14 @@ export default class Scene {
             //transparent: true
         });
         this.mesh = new THREE.Mesh(geometry, material);
+        this.mesh.castShadow = true;
+        
         this.scene.add(this.mesh);
 
         const renderScene = new RenderPass( this.scene, this.camera );
 
-        const params = {
-            exposure: 1.0,
-            bloomStrength: 0.2,
-            bloomThreshold: 0.2,
-            bloomRadius: 0.2
-        };
-
-        const bloomPass = new UnrealBloomPass( 
-            new THREE.Vector2( window.innerWidth, window.innerHeight ), 
-            0.8,
-            0.315,
-            0
-        );
-        bloomPass.threshold = params.bloomThreshold;
-        bloomPass.strength = params.bloomStrength;
-        bloomPass.radius = params.bloomRadius;
-
         this.composer.addPass( renderScene );
-        //this.composer.addPass( bloomPass );
+
     }
 
     addParticles(){
