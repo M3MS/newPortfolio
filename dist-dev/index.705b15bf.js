@@ -612,7 +612,6 @@ function theBlob() {
     });
     let animMesh = blob.mesh;
     let g1Tl = (0, _gsapDefault.default).timeline({
-        clearProps: true,
         scrollTrigger: {
             trigger: ".hello",
             start: "top 60%",
@@ -620,26 +619,21 @@ function theBlob() {
             scrub: 2
         }
     });
-    g1Tl.to(animMesh.rotation, {
-        x: 0.5,
-        y: -1
-    });
     g1Tl.to(blob.camera.position, {
         x: 3,
         z: 4.5
     }, "-= 1");
     let g2Tl = (0, _gsapDefault.default).timeline({
-        clearProps: true,
         scrollTrigger: {
             trigger: ".techno",
             start: "top 80%",
             scroller: ".scroller",
-            scrub: 2
+            scrub: 3
         }
     });
     g2Tl.to(animMesh.material.uniforms.uNoiseDensity, {
         value: 2.8
-    }, "-= 1");
+    });
     g2Tl.to(blob.camera.position, {
         x: 7,
         y: -3,
@@ -9998,12 +9992,15 @@ class Scene {
         (0, _gsapDefault.default).to(this.mesh.material.uniforms.uAmplitude, {
             value: this.mouseTarget.x / 2 + 0.5
         });
-        //gsap.to(this.mesh.material.uniforms.uIntensity, { value: this.mouseTarget.y });
-        (0, _gsapDefault.default).to(this.mesh.material.uniforms.uNoiseStrength, {
-            value: this.mouseTarget.y / 2 + 0.7
+        (0, _gsapDefault.default).to(this.mesh.material.uniforms.uIntensity, {
+            value: this.mouseTarget.y + 0.5
         });
-        this.points.material.uniforms.uNoiseStrength.value = this.mouseTarget.y;
-        this.scene.rotation.set(this.mouseTarget.y * 0.035, this.mouseTarget.x * 0.035, 0);
+        //this.points.material.uniforms.uNoiseStrength.value = this.mouseTarget.y;
+        // this.scene.rotation.set(
+        //   this.mouseTarget.y * 0.035,
+        //   this.mouseTarget.x * 0.035,
+        //   0
+        // );
         requestAnimationFrame(this.animate.bind(this));
         this.composer.render();
     }
@@ -43198,10 +43195,10 @@ parcelHelpers.export(exports, "fragmentShader", ()=>fragmentShader);
 const settings = {
     speed: 0.05,
     density: 0.8,
-    strength: 0.8,
+    strength: 1.0,
     frequency: 3.0,
     amplitude: 3.0,
-    intensity: 2.0
+    intensity: 1.8
 };
 const noise = `
     // GLSL textureless classic 3D noise "cnoise",

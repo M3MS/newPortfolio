@@ -37,7 +37,6 @@ export default class Scene {
         this.init();
         this.animate();
         this.setupResize();
-
     }
 
     init() {
@@ -160,16 +159,15 @@ export default class Scene {
         this.mouseTarget.y = gsap.utils.interpolate(this.mouseTarget.y, this.mouse.y, 0.3);
 
         gsap.to(this.mesh.material.uniforms.uAmplitude, { value: this.mouseTarget.x / 2 + 0.5});
-        //gsap.to(this.mesh.material.uniforms.uIntensity, { value: this.mouseTarget.y });
-        gsap.to(this.mesh.material.uniforms.uNoiseStrength, { value: this.mouseTarget.y / 2 + 0.7});
+        gsap.to(this.mesh.material.uniforms.uIntensity, { value: this.mouseTarget.y + 0.5});
 
-        this.points.material.uniforms.uNoiseStrength.value = this.mouseTarget.y;
+        //this.points.material.uniforms.uNoiseStrength.value = this.mouseTarget.y;
 
-        this.scene.rotation.set(
-          this.mouseTarget.y * 0.035,
-          this.mouseTarget.x * 0.035,
-          0
-        );
+        // this.scene.rotation.set(
+        //   this.mouseTarget.y * 0.035,
+        //   this.mouseTarget.x * 0.035,
+        //   0
+        // );
 
         requestAnimationFrame(this.animate.bind(this));
         this.composer.render();

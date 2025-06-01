@@ -3,10 +3,10 @@
 export const settings = {
   speed: 0.05,
   density: 0.8,
-  strength: 0.8,
+  strength: 1.0,
   frequency: 3.0,
   amplitude: 3.0,
-  intensity: 2.0
+  intensity: 1.8
 };
   
 export const noise = `

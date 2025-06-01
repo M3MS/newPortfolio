@@ -636,7 +636,6 @@ main:before {
 
 @media (width >= 768px) {
   #home .about__img img {
-    object-fit: none;
     object-position: left -10vh;
   }
 }

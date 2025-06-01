@@ -53,7 +53,7 @@ function theBlob() {
     let animMesh = blob.mesh;
 
     let g1Tl = gsap.timeline({
-        clearProps: true,
+    
         scrollTrigger: {
             trigger: '.hello',
             start: "top 60%",
@@ -63,11 +63,6 @@ function theBlob() {
     });
     
 
-    g1Tl.to(animMesh.rotation, {
-        x: 0.5,
-        y: -1
-    });
-
     g1Tl.to(blob.camera.position, {
         x: 3,
         z: 4.5
@@ -75,19 +70,18 @@ function theBlob() {
 
 
     let g2Tl = gsap.timeline({
-        clearProps: true,
         scrollTrigger: {
             trigger: '.techno',
             start: "top 80%",
             scroller: ".scroller",
-            scrub: 2
+            scrub: 3
         }
     });
     
 
     g2Tl.to(animMesh.material.uniforms.uNoiseDensity, {
         value: 2.8
-    }, '-= 1');
+    });
 
     g2Tl.to(blob.camera.position, {
         x: 7,
