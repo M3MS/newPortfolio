@@ -26,7 +26,7 @@
   },
   "scripts": {
     "clean": "rm -rf dist/*",
-    "start": "parcel index.html",
+    "dev": "rm -rf dist-dev .parcel-cache && parcel --dist-dir dist-dev index.html",
     "build": "npm run clean && parcel build index.html"
   }
 }

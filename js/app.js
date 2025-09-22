@@ -53,7 +53,7 @@ function theBlob() {
     let animMesh = blob.mesh;
 
     let g1Tl = gsap.timeline({
-        clearProps: true,
+    
         scrollTrigger: {
             trigger: '.hello',
             start: "top 60%",
@@ -63,48 +63,32 @@ function theBlob() {
     });
     
 
-    g1Tl.to(animMesh.rotation, {
-        x: 0.5,
-        y: -1
-    });
-
     g1Tl.to(blob.camera.position, {
         x: 3,
         z: 4.5
     }, '-= 1');
 
+
     let g2Tl = gsap.timeline({
-        clearProps: true,
         scrollTrigger: {
             trigger: '.techno',
             start: "top 80%",
             scroller: ".scroller",
-            scrub: 2
+            scrub: 3
         }
     });
     
 
-    g2Tl.to(animMesh.rotation, {
-        x: -2.5,
-        y: 1.5
+    g2Tl.to(animMesh.material.uniforms.uNoiseDensity, {
+        value: 2.8
     });
 
-    g2Tl.to(animMesh.scale, {
-        x: 2.5,
-        z: 3
-    }, '-= 1');
-
-    // g2Tl.to(blob.camera.scale, {
-    //     x: 2.5,
-    //     z: 2
-    // }, '-= 1');
-
     g2Tl.to(blob.camera.position, {
-        x: 6,
-        y: -8
+        x: 7,
+        y: -3,
+        z: -2
     }, '-= 1');
     
-    //console.log(blob);
 }
 
 function marQuee() {
@@ -163,38 +147,39 @@ function home() {
     let wavyText = textSplit.words;
     let introText = introSplit.words;
     let workItem = gsap.utils.toArray(".work__item");
-    let introTl = gsap.timeline({paused: true, delay: 2.5});
+    let introTl = gsap.timeline({paused: true, delay: 2.0});
+
+    introTl.from('#gl-stuff', {
+        clearProps: true,
+        autoAlpha: 0,
+        duration: 2,
+        ease: 'power3'
+    });
 
     introText.forEach(word => {
 
         introTl.from(word, {
-            opacity: 0,
+            autoAlpha: 0,
             y: 150,
             duration: 0.5,
-            delay: 0.2,
+            delay: 0.1,
             stagger: 0.05,
             ease: "power3"
         })
 
     });
 
-    introTl.from('#gl-stuff', {
-        autoAlpha: 0,
-        duration: 2,
-        ease: 'power3.out'
-    });
-
     wavyText.forEach(word => {
 
         gsap.from(word, {
-            opacity: 0,
+            autoAlpha: 0,
             y: 150,
             stagger: 0.5,
             ease: "power3inOut",
             scrollTrigger: {
                 trigger: word,
-                start: "top 70%",
-                scroller: ".scroller",
+                start: "top 75%",
+                scroller: ".scroller"
             }
         })
     });
